@@ -29,7 +29,7 @@ Lütfen aşşağıdaki yönergeleri takip ederek görevleri tamamlayın.
    2. Django Rest Framework
       * Başka kütüphaneye ihtiyacınız varsa kurablirsiniz.
 5. Django projesi oluşturun
-6. Yeni app oluşturun `location` 
+6. Yeni app oluşturun `location`
 7. Modelleri Ekleyin
    1. Country
       1. name
