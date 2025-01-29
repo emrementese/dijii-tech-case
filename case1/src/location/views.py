@@ -28,6 +28,8 @@ from .serializers import (
 
 @extend_schema_view(
     most_searched_cities=extend_schema(
+        summary="Get most searched cities",
+        description=" Get most searched cities by country codes",
         request=MultiCountryCodeSerializer,
         responses={
             200: MostSearchedCitySerializer(many=True),
@@ -38,6 +40,8 @@ from .serializers import (
         },
     ),
     country_search_ratio=extend_schema(
+        summary="Get country search ratio",
+        description="Get search ratio of countries by country codes",
         request=MultiCountryCodeSerializer,
         responses={
             200: CountryRatioSerializer(many=True),
@@ -48,6 +52,8 @@ from .serializers import (
         },
     ),
     location_search=extend_schema(
+        summary="Search locations",
+        description="Search locations by location model and search query",
         request=None,
         parameters=[
             OpenApiParameter(
@@ -87,6 +93,8 @@ from .serializers import (
         },
     ),
     select_location=extend_schema(
+        summary="Select location",
+        description="Select location and increase search count",
         request=None,
         parameters=[
             OpenApiParameter(
@@ -114,6 +122,8 @@ from .serializers import (
         },
     ),
     deselect_location=extend_schema(
+        summary="Deselect location",
+        description="Deselect location and delete cookies",
         request=None,
         responses={
             204: None,
@@ -266,8 +276,8 @@ class LocationViewset(GenericViewSet):
 
             try:
                 location = apps.get_model("location", model).objects.get(uuid=uuid)
-            except model.DoesNotExist:
-                pass
+            except Exception:
+                return super().finalize_response(request, response, *args, **kwargs)
 
         match model:
 
