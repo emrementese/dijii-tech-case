@@ -4,15 +4,25 @@
 ### Tamamlanan Görevler
 
 1- Django ve DRF Yapısı Prof. şekidle oluşturuldu
+
 2- Modeller istenilen şekilde hazırlandı
+
 3- Data migration yapılarak fix. klasöründeki veriler Dbye eklendi
+
 4- Custom manager ve queryset kullanılarak localtion modellerine özel search metod Unaccent çalışacak şekilde  yazıldı
+
 5- Tüm Location Modeller için Search End Point yazıldı.
+
 6- Tüm Location Modeller için Select End Point yazıldı
+
 7- Deselect End Point yazıldı
+
 8- search_count' artırımları status kodları ile istenilen şekilde yazıldı
+
 9- Counry Most Searched Cities End Point yazıldı.
+
 10- Country Search Ratio end-point yazıldı
+
 11- search_text için custom manage komutu yazılarak seracg_textlerin oluşturulması sağlandı.
 
 ### Ekstralar
