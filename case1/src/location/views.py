@@ -13,6 +13,7 @@ from drf_spectacular.utils import (
 )
 from rest_framework import status
 from rest_framework.decorators import action
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
@@ -74,6 +75,7 @@ from .serializers import (
         ],
         responses={
             200: PolymorphicProxySerializer(
+                many=True,
                 component_name="LocationSearchResponse",
                 serializers={
                     "Country": get_dynamic_serializer(
@@ -137,6 +139,7 @@ from .serializers import (
 class LocationViewset(GenericViewSet):
     http_method_names = ["get", "post", "delete"]
     permission_classes = []  # sizi uğraştırmasın diye boş bıraktım.
+    pagination_class = PageNumberPagination
 
     def get_serializer_class(self):
         match self.action:
@@ -164,8 +167,15 @@ class LocationViewset(GenericViewSet):
         results = model.objects.search(search_query)
 
         serializer = get_dynamic_serializer(model)
-        results = serializer(results, many=True).data
-        return Response(results, status=status.HTTP_200_OK)
+        paginator = self.pagination_class()
+        result_page = paginator.paginate_queryset(results, request)
+
+        if result_page is not None:
+            serializer = serializer(result_page, many=True)
+            return paginator.get_paginated_response(serializer.data)
+
+        serializer = serializer(results, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(
         detail=False,
