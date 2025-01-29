@@ -25,7 +25,25 @@ cases = [
 
 
 def getInaccessibleFactory(n, c):
-    pass
+    # Burada case-3 deki FSM ye benzer bir yaklaşım ile  çözüm yapmaya çalıştım.
+    # yine inital bir distance listesi oluşturup bu listeyi tarama yaparak güncelledim
+    
+    # en uzağı aradağımız için hepsini ilk başta 0 olarak ayarladım.
+    distances = [0] * n
+    
+    # index numarası verilen şegrin en yakın fabrikasını bulmak için
+    find_closest_factory = lambda i: min([ abs(i - j) for j in c])
+    
+    for i in range(n):
+        
+        if i not in c:
+            # kendisi bir fabrika değil ise
+            # en yakın fabrikayı bul
+            closest_factory = find_closest_factory(i)
+            distances[i] = closest_factory
+    
+    # en uzak şehrin uzaklık mesafesini dön
+    return max(distances)   
 
 
 if __name__ == "__main__":
